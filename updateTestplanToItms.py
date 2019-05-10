@@ -184,7 +184,7 @@ class UpdateTestplanToItms(wx.Frame):
             filepath_inputexcel = filename_inputexcel
             filepath_inputexcel_dialog.Destroy()
             self.updatedisplay(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))
-            self.updatedisplay("测试方案的Excel的文件路径和文件名：{}".decode('gbk').format(filename_inputexcel))
+            self.updatedisplay("测试方案的Excel的文件路径和文件名：{}".format(filename_inputexcel))
 
     def get_inputexcelsheetname(self, event):
         try:
@@ -193,8 +193,8 @@ class UpdateTestplanToItms(wx.Frame):
             for item_sheetname in sheetnames_list:
                 self.listbox_SheetName.Append(item_sheetname)
         except NameError:
-            self.updatedisplay("未选择测试方案文件，请选择！".decode('gbk'))
-            diag_error_input = wx.MessageDialog(None, "未选择测试方案文件，请选择！".decode('gbk'), '错误'.decode('gbk'), wx.OK | wx.ICON_ERROR | wx.STAY_ON_TOP)
+            self.updatedisplay("未选择测试方案文件，请选择！")
+            diag_error_input = wx.MessageDialog(None, "未选择测试方案文件，请选择！", '错误', wx.OK | wx.ICON_ERROR | wx.STAY_ON_TOP)
             diag_error_input.ShowModal()
 
 
@@ -204,24 +204,24 @@ class UpdateTestplanToItms(wx.Frame):
         sheetname_seleted = self.listbox_SheetName.GetStringSelection()
         teamname_selected = self.text_TeamName.GetValue()
         if len(sheetname_seleted) == 0:
-            self.updatedisplay("未选择Sheet名称，请选择！".decode('gbk'))
-            diag_error_sheetname = wx.MessageDialog(None, "未选择Sheet名称，请选择！".decode('gbk'), '错误'.decode('gbk'), wx.OK | wx.ICON_ERROR | wx.STAY_ON_TOP)
+            self.updatedisplay("未选择Sheet名称，请选择！")
+            diag_error_sheetname = wx.MessageDialog(None, "未选择Sheet名称，请选择！", '错误', wx.OK | wx.ICON_ERROR | wx.STAY_ON_TOP)
             diag_error_sheetname.ShowModal()
             self.button_go.Enable()
         else:
             if len(teamname_selected) == 0:
-                self.updatedisplay("未填写测试团队名称，请填写！".decode('gbk'))
-                diag_error_sheetname = wx.MessageDialog(None, "未填写测试团队名称，请填写！".decode('gbk'), '错误'.decode('gbk'), wx.OK | wx.ICON_ERROR | wx.STAY_ON_TOP)
+                self.updatedisplay("未填写测试团队名称，请填写！")
+                diag_error_sheetname = wx.MessageDialog(None, "未填写测试团队名称，请填写！", '错误', wx.OK | wx.ICON_ERROR | wx.STAY_ON_TOP)
                 diag_error_sheetname.ShowModal()
                 self.button_go.Enable()
             else:
                 self.updatedisplay(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))
-                self.updatedisplay("选择的Sheet名称是：{}".decode('gbk').format(sheetname_seleted))
-                self.updatedisplay("选择的测试团队名称是：{}".decode('gbk').format(teamname_selected))
+                self.updatedisplay("选择的Sheet名称是：{}".format(sheetname_seleted))
+                self.updatedisplay("选择的测试团队名称是：{}".format(teamname_selected))
                 timestamp = time.strftime('%Y%m%d', time.localtime())
                 # add output workbook
-                workbook_output = xlsxwriter.Workbook("测试配置转换结果-{}-{}-{}.xlsx".decode('gbk').format(sheetname_seleted, teamname_selected, timestamp))
-                self.updatedisplay("创建输出文档：《测试配置转换结果-{}-{}-{}.xlsx》".decode('gbk').format(sheetname_seleted, teamname_selected, timestamp))
+                workbook_output = xlsxwriter.Workbook("测试配置转换结果-{}-{}-{}.xlsx".format(sheetname_seleted, teamname_selected, timestamp))
+                self.updatedisplay("创建输出文档：《测试配置转换结果-{}-{}-{}.xlsx》".format(sheetname_seleted, teamname_selected, timestamp))
                 formatOne = workbook_output.add_format({'border': 1})
                 formatTitle = workbook_output.add_format({'bold': True, 'border': 1})
                 merge_format = workbook_output.add_format({'align': 'center', 'valign': 'vcenter', 'bold': True, 'border': 1})
@@ -235,7 +235,7 @@ class UpdateTestplanToItms(wx.Frame):
                         configname = str(sheet_selected.cell(item_line+1, 1).value).strip()
                         # add new sheet to output workbook named after the config name
                         sheet_new_output = workbook_output.add_worksheet("{}".format(configname))
-                        self.updatedisplay("输出文档增加sheet：{}".decode('gbk').format(configname))
+                        self.updatedisplay("输出文档增加sheet：{}".format(configname))
                         # set column width
                         sheet_new_output.set_column('A:A', 18)
                         sheet_new_output.set_column('B:B', 25)
@@ -281,9 +281,9 @@ class UpdateTestplanToItms(wx.Frame):
 
                 workbook_output.close()
                 self.updatedisplay(time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))
-                self.updatedisplay("".decode('gbk').format(workbook_output))
-                self.updatedisplay("配置信息获取完毕，保存在Excel：《测试配置转换结果-{}-{}-{}.xlsx》 中！".decode('gbk').format(sheetname_seleted, teamname_selected, timestamp))
-                diag_finish = wx.MessageDialog(None, "配置信息获取完毕，保存在Excel：《测试配置转换结果-{}-{}-{}.xlsx》 中！".decode('gbk').format(sheetname_seleted, teamname_selected, timestamp), '提示'.decode('gbk'), wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP)
+                self.updatedisplay("".format(workbook_output))
+                self.updatedisplay("配置信息获取完毕，保存在Excel：《测试配置转换结果-{}-{}-{}.xlsx》 中！".format(sheetname_seleted, teamname_selected, timestamp))
+                diag_finish = wx.MessageDialog(None, "配置信息获取完毕，保存在Excel：《测试配置转换结果-{}-{}-{}.xlsx》 中！".format(sheetname_seleted, teamname_selected, timestamp), '提示', wx.OK | wx.ICON_INFORMATION | wx.STAY_ON_TOP)
                 diag_finish.ShowModal()
                 self.button_go.Enable()
 
@@ -293,11 +293,11 @@ class UpdateTestplanToItms(wx.Frame):
     def updatedisplay(self, msg):
         t = msg
         if isinstance(t, int):
-            self.textctrl_display.AppendText("完成第%s页".decode('gbk') % t)
+            self.textctrl_display.AppendText(u"完成第%s页" % t)
         elif t == "Finished":
             self.button_go.Enable()
         else:
-            self.textctrl_display.AppendText("%s".decode('gbk') % t)
+            self.textctrl_display.AppendText(u"%s" % t)
         self.textctrl_display.AppendText(os.linesep)
 
 
